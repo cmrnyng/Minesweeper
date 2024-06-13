@@ -15,7 +15,7 @@ public class Board {
         initialiseBoard();
         placeMines(mines);
         calculateAdjacentMines();
-        logBoard();
+//        logBoard();
     }
 
     private void initialiseBoard() {
@@ -71,15 +71,63 @@ public class Board {
     }
 
     public void logBoard() {
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                if (cells[row][col].isMine()) {
-                    System.out.print("* ");
-                } else {
-                    System.out.print(cells[row][col].getAdjacentMines() + " ");
-                }
+        String divider = "\n─" + "────".repeat(cols) + "\n";
+        StringBuilder sb = new StringBuilder();
+
+        // Top border
+        sb.append("┌");
+        for (int col = 0; col < cols; col++) {
+            sb.append("───");
+            if (col < cols - 1) {
+                sb.append("┬");
             }
-            System.out.println(); // Move to the next line after each row
         }
+        sb.append("┐\n");
+
+        // Rows
+        for (int row = 0; row < rows; row++) {
+            sb.append("│");
+            for (int col = 0; col < cols; col++) {
+                if (cells[row][col].isRevealed()) {
+                    if (cells[row][col].isMine()) {
+                        sb.append(" * ");
+                    } else {
+                        int adjacentMines = cells[row][col].getAdjacentMines();
+                        sb.append(" ").append(adjacentMines).append(" ");
+                    }
+                } else {
+                    sb.append(" · ");
+                }
+                sb.append("│");
+            }
+            sb.append("\n");
+
+            // Row separator or bottom border
+            if (row < rows - 1) {
+                sb.append("├");
+                for (int col = 0; col < cols; col++) {
+                    sb.append("───");
+                    if (col < cols - 1) {
+                        sb.append("┼");
+                    }
+                }
+                sb.append("┤\n");
+            }
+        }
+
+        // Bottom border
+        sb.append("└");
+        for (int col = 0; col < cols; col++) {
+            sb.append("───");
+            if (col < cols - 1) {
+                sb.append("┴");
+            }
+        }
+        sb.append("┘");
+
+        System.out.println(divider);
+        System.out.println(sb.toString());
     }
+
+
 }

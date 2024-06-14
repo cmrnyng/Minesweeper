@@ -30,7 +30,7 @@ public class Game implements GameStateCallback {
                 difficulty = input.nextInt();
                 switch (difficulty) {
                     case 1:
-                        board = new Board(4, 4, 1, this);
+                        board = new Board(9, 9, 10, this);
                         break;
                     case 2:
                         board = new Board(16, 16, 40, this);

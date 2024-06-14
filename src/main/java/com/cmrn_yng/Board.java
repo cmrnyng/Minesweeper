@@ -180,12 +180,12 @@ public class Board {
                         grid.append(" * ");
                     } else {
                         int adjacentMines = cells[row][col].getAdjacentMines();
-                        grid.append(" ").append(adjacentMines).append(" ");
+                        grid.append(" ").append(adjacentMines == 0 ? "·" : adjacentMines).append(" ");
                     }
                 } else if (cells[row][col].isFlagged()) {
                     grid.append(" F ");
                 } else {
-                    grid.append(" · ");
+                    grid.append("   ");
                 }
                 grid.append("│");
             }

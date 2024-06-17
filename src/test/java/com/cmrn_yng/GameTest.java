@@ -31,7 +31,7 @@ public class GameTest {
         ByteArrayInputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
-        final int[] expected = {1, 7, 0};
+        final int[] expected = {7, 1, 0};
         final var actual = game.move();
 
         Assertions.assertArrayEquals(expected, actual,

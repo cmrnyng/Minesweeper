@@ -1,9 +1,7 @@
 package com.cmrn_yng;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.lang.reflect.Field;
 
 public class BoardTest {
     private Board board;
@@ -12,7 +10,6 @@ public class BoardTest {
     public void isValidPositionWhenPositionIsValidForA9x9Board() {
         board = new Board(9, 9, 10);
         final boolean expected = board.isValidPosition(5, 8);
-        final boolean actual = true;
         Assertions.assertTrue(expected,
                 "Board::isValidPosition should return true for a valid position within a 9x9 board.");
     }

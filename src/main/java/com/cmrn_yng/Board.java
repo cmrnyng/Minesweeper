@@ -80,16 +80,16 @@ public class Board {
         return (row >= 0 && row < rows && col >= 0 && col < cols);
     }
 
-    public void cellAction(int row, int col, char action) {
+    public void cellAction(int row, int col, int action) {
         Scanner scanner = new Scanner(System.in);
         Cell cell = cells[row][col];
-        if (action == 'f') {
+        if (action == 1) { // Flag
             if (cell.isRevealed()) {
                 System.out.println("You can't flag a revealed cell!");
                 return;
             }
             cell.setFlagged(!cell.isFlagged());
-        } else if (action == 'r') {
+        } else if (action == 0) { // Reveal
             if (cell.isFlagged()) {
                 System.out.println("You have previously flagged this cell.\nAre you sure you wish to proceed? (y/N)");
                 String decision = scanner.nextLine().trim();

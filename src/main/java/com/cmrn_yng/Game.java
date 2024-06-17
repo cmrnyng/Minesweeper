@@ -1,6 +1,9 @@
 package com.cmrn_yng;
 
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Game implements GameStateCallback {
     Board board;
@@ -56,24 +59,28 @@ public class Game implements GameStateCallback {
         while (ongoing) {
             board.logBoard();
             int[] move = move();
-            board.cellAction(move[0], move[1], (char) move[2]);
+            System.out.println(Arrays.toString(move));
+            board.cellAction(move[0], move[1], move[2]);
             if (board.hasPlayerWon()) gameWin();
         }
     }
 
     public int[] move() {
         Scanner scanner = new Scanner(System.in);
+        Pattern pattern = Pattern.compile("^\\d+,\\s?\\d+,\\s?[FR]$");
+        Matcher matcher;
         int[] move;
         while (true) {
             System.out.println("Enter your move in the following format:");
             System.out.println("row, column, (F/R)");
             System.out.println("Where F = flag, R = reveal");
             System.out.println("Example: 4, 3, R");
-            String input = scanner.nextLine();
-            try {
+            String input = scanner.nextLine().trim();
+            matcher = pattern.matcher(input);
+            if (matcher.matches()) {
                 move = convertInput(input);
                 break;
-            } catch (Exception e) {
+            } else {
                 System.out.println("Invalid move.\n");
             }
         }
@@ -86,15 +93,12 @@ public class Game implements GameStateCallback {
         return move;
     }
 
-    private int[] convertInput(String input) throws Exception {
+    private int[] convertInput(String input) {
         String[] parts = input.split(",");
-        if (parts.length != 3) throw new Exception();
 
         int row = Integer.parseInt(parts[0].trim()) - 1;
         int col = Integer.parseInt(parts[1].trim()) - 1;
-        char action = parts[2].trim().toLowerCase().charAt(0);
-
-        if (action != 'f' && action != 'r') throw new Exception();
+        int action = parts[2].trim().equalsIgnoreCase("f") ? 1 : 0;
 
         return new int[]{row, col, action};
     }

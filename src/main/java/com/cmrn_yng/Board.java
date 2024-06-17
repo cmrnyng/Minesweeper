@@ -1,5 +1,6 @@
 package com.cmrn_yng;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,6 +12,34 @@ public class Board {
     private boolean isFirstMove = true;
     private boolean gameOver = false;
 
+    /**
+     * Board constructor for testing
+     */
+    public Board() {
+        this.rows = 9;
+        this.cols = 9;
+        this.mines = 10;
+        cells = new Cell[rows][cols];
+        initialiseBoard();
+        boolean[][] minePositions = {
+                {false, false, false, true, false, false, false, false, false},
+                {false, false, false, false, true, false, false, false, false},
+                {false, false, true, false, false, false, false, true, false},
+                {false, false, false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false, false, false},
+                {false, false, false, true, false, true, false, false, false},
+                {false, true, false, false, false, false, false, true, false},
+                {false, false, false, false, false, false, false, false, false},
+                {false, true, false, false, false, true, false, false, false}
+        };
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                boolean isMine = minePositions[row][col];
+                cells[row][col].setMine(isMine);
+            }
+        }
+        calculateAdjacentMines();
+    }
     /**
      * Board constructor
      * @param rows  number of rows board should have
@@ -320,5 +349,13 @@ public class Board {
      */
     private void setFirstMove() {
         this.isFirstMove = false;
+    }
+
+    /**
+     * Gets cells array
+     * @return cells array
+     */
+    public Cell[][] getCells() {
+        return cells;
     }
 }
